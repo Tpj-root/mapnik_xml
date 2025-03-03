@@ -1,0 +1,33 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-180, -85.0511], [180, -85.0511]
+        ]
+      },
+      "properties": {
+        "stroke": "#999999",
+        "stroke-width": 1,
+        "stroke-dasharray": "5,5"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [-180, 85.0511], [180, 85.0511]
+        ]
+      },
+      "properties": {
+        "stroke": "#999999",
+        "stroke-width": 1,
+        "stroke-dasharray": "5,5"
+      }
+    }
+  ]
+}

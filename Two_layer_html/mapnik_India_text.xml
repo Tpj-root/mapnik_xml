@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE Map[]>
+<Map srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over">
+  <Parameters>
+    <Parameter name="name"><![CDATA[It's a simple world]]></Parameter>
+    <Parameter name="description"><![CDATA[Simplest CartoCSS style showing land cover of the world.]]></Parameter>
+    <Parameter name="bounds">-180,-85.05112877980659,180,85.05112877980659</Parameter>
+    <Parameter name="center">78,22,5</Parameter>  <!-- Centered on India -->
+    <Parameter name="format"><![CDATA[png]]></Parameter>
+    <Parameter name="minzoom">0</Parameter>
+    <Parameter name="maxzoom">18</Parameter>
+  </Parameters>
+
+  <Style name="world">
+    <Rule>
+      <PolygonSymbolizer fill="#ffffff" fill-opacity="0.75" />
+      <LineSymbolizer stroke="#dddddd" stroke-width="0.3" />
+    </Rule>
+  </Style>
+
+  <Style name="road_style">
+    <Rule>
+      <LineSymbolizer stroke="black" stroke-width="10" stroke-linecap="round"/>
+    </Rule>
+    <Rule>
+      <LineSymbolizer stroke="red" stroke-width="3" stroke-linecap="round" stroke-dasharray="10,5"/>
+    </Rule>
+  </Style>
+
+  <!-- Style for labeling "INDIA" -->
+  <Style name="india_label">
+    <Rule>
+      <TextSymbolizer
+        face-name="DejaVu Sans Bold" size="20" fill="red"
+        halo-fill="white" halo-radius="2"
+        placement="point" allow-overlap="true">
+        <![CDATA[INDIA]]>
+      </TextSymbolizer>
+    </Rule>
+  </Style>
+
+  <Layer name="world" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over">
+    <StyleName><![CDATA[road_style]]></StyleName>
+    <Datasource>
+      <Parameter name="file"><![CDATA[very_simplified_land_polygons.gpkg]]></Parameter>
+      <Parameter name="type"><![CDATA[ogr]]></Parameter>
+      <Parameter name="layer"><![CDATA[very_simplified_land_polygons]]></Parameter>
+    </Datasource>
+  </Layer>
+
+  <!-- Layer to place "INDIA" at the center -->
+  <Layer name="india_label" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over">
+    <StyleName><![CDATA[india_label]]></StyleName>
+    <Datasource>
+      <Parameter name="type"><![CDATA[geojson]]></Parameter>
+      <Parameter name="inline"><![CDATA[
+      {
+        "type": "FeatureCollection",
+        "features": [
+          {
+            "type": "Feature",
+            "geometry": { "type": "Point", "coordinates": [8686442.82, 2529863.64] },
+            "properties": { "name": "INDIA" }
+          }
+        ]
+      }
+      ]]></Parameter>
+    </Datasource>
+  </Layer>
+
+</Map>
