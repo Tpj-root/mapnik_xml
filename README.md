@@ -283,6 +283,23 @@ SELECT id, name, ST_AsText(ST_Transform(geom, 3857)) FROM places;
 
 
 
+
+
+
+
+login
+
+
+sudo -u postgres psql
+\c gis
+\dt
+SELECT * FROM planet_osm_polygon LIMIT 5;
+
+
+
+
+
+
 **Export**
 
 ```
