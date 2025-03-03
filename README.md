@@ -105,6 +105,199 @@ Each time you open the map, it will be centered at **(82.75, 21)** with an initi
 
 
 
+**Notes:**
+
+
+mapnik-config --fonts
+/usr/share/fonts
+
+
+
+
+
+**mapnik-config**
+
+
+
+```
+Usage: mapnik-config [OPTION]
+
+Known values for OPTION are:
+
+  -h --help         display this help and exit
+  -v --version      version information (MAPNIK_VERSION_STRING)
+  --version-number  version number (MAPNIK_VERSION) (new in 2.2.0)
+  --git-revision    git hash from "git rev-list --max-count=1 HEAD"
+  --git-describe    git decribe output (new in 2.2.0)
+  --fonts           default fonts directory
+  --input-plugins   default input plugins directory
+  --defines         pre-processor defines for Mapnik build (new in 2.2.0)
+  --prefix          Mapnik prefix [default /usr]
+  --lib-name        Mapnik library name
+  --libs            library linking information
+  --dep-libs        library linking information for Mapnik dependencies
+  --ldflags         library paths (-L) information
+  --includes        include paths (-I) for Mapnik headers (new in 2.2.0)
+  --dep-includes    include paths (-I) for Mapnik dependencies (new in 2.2.0)
+  --cxxflags        c++ compiler flags and pre-processor defines (new in 2.2.0)
+  --cflags          all include paths, compiler flags, and pre-processor defines (for back-compatibility)
+  --cxx             c++ compiler used to build mapnik (new in 2.2.0)
+  --all-flags       all compile and link flags (new in 2.2.0)
+  --gdal-data       path to GDAL_DATA directory, if detected at build time (new in 3.0.16)
+  --proj-lib        path to PROJ_LIB directory, if detected at build time (new in 3.0.16)
+  --icu-data        path to ICU_DATA directory, if detected at build time (new in 3.0.16)
+
+```
+
+
+
+
+
+
+Files_Types
+
+
+
+### Notes:
+- **Shapefile (`shape`):** Ensure `world_borders.shp` exists.  
+- **GeoJSON (`geojson`):** Use a `.json` file.  
+- **Raster (`raster`):** For `.tif`, `.jpg`, `.png` images.  
+- **PostGIS (`postgis`):** Requires a running PostgreSQL database with PostGIS.  
+- **SQLite (`sqlite`):** Needs a spatially enabled SQLite database.  
+
+Run:  
+```bash
+mapnik-render --xml map.xml --img output.png
+```
+
+
+
+If you're using .shp, ensure all required files (.shp, .shx, .dbf) exist.
+
+
+
+
+
+http://postgis.net/documentation/
+
+Learn
+
+
+```
+sudo apt update
+sudo apt install postgis postgresql-15-postgis-3
+sudo -u postgres psql
+CREATE EXTENSION postgis;
+SELECT postgis_full_version();
+
+```
+
+
+sudo -u postgres createdb mygisdb
+sudo -u postgres psql -d mygisdb -c "CREATE EXTENSION postgis;"
+sudo -u postgres psql
+CREATE USER cnc WITH PASSWORD '123';
+GRANT ALL PRIVILEGES ON DATABASE mygisdb TO cnc;
+
+
+nik4 mapnik.xml output.png
+
+
+
+```
+sudo -u postgres psql -d mygisdb
+
+
+CREATE TABLE places (
+    id SERIAL PRIMARY KEY,
+    name TEXT,
+    geom GEOMETRY(Point, 4326)
+);
+
+
+INSERT INTO places (name, geom) VALUES ('My Location', ST_GeomFromText('POINT(78.686 10.775)', 4326));
+
+
+GRANT SELECT ON TABLE places TO cnc;
+GRANT ALL ON TABLE places TO cnc;
+GRANT ALL PRIVILEGES ON TABLE places TO cnc;
+
+
+```
+
+nik4 -b 78.5 10.7 78.9 10.8 -d 800 600 mapnik.xml output.png
+
+
+nik4 -b 8738580.027271975 1198103.0405602609 8783107.823589286 1209433.8422168817 -d 800 600 mapnik.xml output.png
+
+
+
+GOOD
+```
+cnc@debian:~/Documents/sample$ nik4 -b 78.5 10.7 78.9 10.8 -d 800 600 mapnik.xml output.png
+
+http://postgis.net/documentation/training/
+```
+
+
+
+mapnic read 
+
+```
+ogrinfo -al -ro PG:"dbname=mygisdb user=cnc password=123" places
+```
+
+
+Import into PostGIS using:
+
+shp2pgsql -I -s 4326 mydata.shp mytable | psql -d mygisdb
+
+
+
+
+1. Coordinate System Mismatch
+
+Your places layer is in EPSG:4326 (WGS 84), but Mapnik's default is EPSG:3857 (Web Mercator). Try transforming it in your mapnik.xml:
+
+
+
+
+
+```
+
+<Parameter name="table"><![CDATA[(SELECT id, name, ST_Transform(geom, 3857) AS geom FROM places) AS subquery]]></Parameter>
+<Parameter name="srid"><![CDATA[3857]]></Parameter>
+
+```
+
+
+```
+
+https://github.com/mapbox/osm-bright
+```
+
+
+
+
+SELECT id, name, ST_AsText(ST_Transform(geom, 3857)) FROM places;
+
+
+
+**Export**
+
+```
+https://www.openstreetmap.org/export#map=19/10.796804/78.686680
+
+```
+
+
+```
+https://github.com/mapnik/mapnik/wiki/XMLConfigReference
+https://github.com/openstreetmap/mapnik-stylesheets/blob/master/osm.xml
+https://github.com/mapnik/mapnik/wiki/StyleShare
+
+```
+
 
 
 
