@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Map background-color="white">
+  <Style name="text_style">
+    <Rule>
+      <TextSymbolizer size="14" fill="black" face-name="Noto Serif Tamil Regular" allow-overlap="true" dy="0">
+        [label]
+      </TextSymbolizer>
+    </Rule>
+  </Style>
+
+  <Layer name="text_layer">
+    <StyleName>text_style</StyleName>
+    <Datasource>
+      <Parameter name="type">csv</Parameter>
+      <Parameter name="inline">
+wkt,label
+"POINT(0 0)","சபரி"
+"POINT(0 -10)","Line 2 from file"
+"POINT(0 -20)","Line 3 from file"
+"POINT(0 -30)","Line 4 from file"
+      </Parameter>
+    </Datasource>
+  </Layer>
+</Map>

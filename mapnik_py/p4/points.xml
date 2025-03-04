@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Map background-color='lightgreen'>
+  <Style name="point_style">
+    <Rule>
+      <PointSymbolizer/>
+<TextSymbolizer size="14" fill="black" face-name="Noto Serif Tamil Regular" allow-overlap="true" dx="10" dy="10">
+  [label]
+</TextSymbolizer>
+    </Rule>
+  </Style>
+
+  <Style name="line_style">
+    <Rule>
+      <!-- <LineSymbolizer stroke="black" stroke-width="2"/> -->
+      <LineSymbolizer stroke="red" stroke-width="2"/>
+    </Rule>
+  </Style>
+
+  <Layer name="points_layer">
+    <StyleName>point_style</StyleName>
+    <Datasource>
+      <Parameter name="type">csv</Parameter>
+      <Parameter name="inline">
+wkt,label
+"POINT(0 0)","(0,0)"
+"POINT(0 10)","(0,10)"
+"POINT(0 20)","(0,20)"
+"POINT(0 30)","(0,30)"
+"POINT(10 0)","(10,0)"
+"POINT(20 0)","(20,0)"
+"POINT(30 0)","(30,0)"
+"POINT(0 -10)","(0,-10)"
+"POINT(0 -20)","(0,-20)"
+"POINT(0 -30)","(0,-30)"
+"POINT(-10 0)","(-10,0)"
+"POINT(-20 0)","(-20,0)"
+"POINT(-30 0)","(-30,0)"
+      </Parameter>
+    </Datasource>
+  </Layer>
+
+  <Layer name="lines_layer">
+    <StyleName>line_style</StyleName>
+    <Datasource>
+      <Parameter name="type">csv</Parameter>
+      <Parameter name="inline">
+wkt
+"LINESTRING(0 0, 0 10, 0 20, 0 30)"
+"LINESTRING(0 0, 10 0, 20 0, 30 0)"
+"LINESTRING(0 0, 0 -10, 0 -20, 0 -30)"
+"LINESTRING(0 0, -10 0, -20 0, -30 0)"
+      </Parameter>
+    </Datasource>
+  </Layer>
+</Map>
