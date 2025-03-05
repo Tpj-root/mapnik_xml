@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Map background-color="#afc6e9" srs="+proj=merc +a=8137 +b=8137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over">
+  
+  <Parameters>
+    <Parameter name="name"><![CDATA[It's a simple world]]></Parameter>
+    <Parameter name="description"><![CDATA[Simplest CartoCSS style showing land cover of the world.]]></Parameter>
+    <Parameter name="bounds">-180,-85.05112877980659,180,85.05112877980659</Parameter>
+    <Parameter name="center">0,0,4</Parameter>
+    <Parameter name="format"><![CDATA[png]]></Parameter>
+    <Parameter name="minzoom">0</Parameter>
+    <Parameter name="maxzoom">18</Parameter>
+  </Parameters>
+
+  <!-- Style for World Layer -->
+  <Style filter-mode="first" name="world">
+    <Rule>
+      <PolygonSymbolizer fill="#ffffff" fill-opacity="0.75" />
+      <LineSymbolizer stroke="#dddddd" stroke-width="0.3" />
+    </Rule>
+  </Style>
+
+  <!-- World Layer -->
+  <!-- <Layer name="world" srs="+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over"> -->
+    <!-- <StyleName><![CDATA[world]]></StyleName> -->
+    <!-- <Datasource> -->
+      <!-- <Parameter name="file"><![CDATA[very_simplified_land_polygons.gpkg]]></Parameter> -->
+      <!-- <Parameter name="type"><![CDATA[ogr]]></Parameter> -->
+      <!-- <Parameter name="layer"><![CDATA[very_simplified_land_polygons]]></Parameter> -->
+    <!-- </Datasource> -->
+  <!-- </Layer> -->
+
+  <!-- Style for Point Labels -->
+<Style name="style">
+  <!-- Points visible at zoom levels 10-18 -->
+  <Rule minzoom="10" maxzoom="18">
+    <PointSymbolizer/>
+    <TextSymbolizer size="10" fill="black" face-name="DejaVu Serif Book" allow-overlap="true" dy="10" dx="10" wrap-width="1200">
+      [label]
+    </TextSymbolizer>
+  </Rule>
+  
+  <!-- Points visible at zoom levels 1-18 -->
+  <Rule minzoom="1" maxzoom="18">
+    <PointSymbolizer/>
+    <TextSymbolizer size="10" fill="black" face-name="DejaVu Serif Book" allow-overlap="true" dy="10" dx="10" wrap-width="1200">
+      [label]
+    </TextSymbolizer>
+  </Rule>
+</Style>
+
+
+  <!-- Single Point Layer with Zoom Level Filtering -->
+  <Layer name="points">
+    <StyleName>style</StyleName>
+    <Datasource>
+      <Parameter name="type">csv</Parameter>
+      <Parameter name="inline">
+wkt,label,zoom_min,zoom_max
+"POINT(0 0)","#ifndef KINEMATICS_H",10,18
+"POINT(0 1000)","#define KINEMATICS_H",10,18
+"POINT(0 2000)","0123456789 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789 0123456789 ",1,18
+      </Parameter>
+    </Datasource>
+  </Layer>
+</Map>

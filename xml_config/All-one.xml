@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE Map[]>
+<Map background-color="#afc6e9" srs="+init=epsg:3857">
+  <Parameters>
+    <Parameter name="name"><![CDATA[It's a simple world]]></Parameter>
+    <Parameter name="description"><![CDATA[Simplest CartoCSS style showing land cover of the world.]]></Parameter>
+    <Parameter name="bounds">-180,-85.05112877980659,180,85.05112877980659</Parameter>
+    <Parameter name="center">0,0,4</Parameter>
+    <Parameter name="format"><![CDATA[png]]></Parameter>
+    <Parameter name="minzoom">0</Parameter>
+    <Parameter name="maxzoom">18</Parameter>
+  </Parameters>
+
+  <Style filter-mode="first" name="world">
+    <Rule>
+      <PolygonSymbolizer fill="#ffffff" fill-opacity="0.75" />
+      <LineSymbolizer stroke="#dddddd" stroke-width="0.3" />
+    </Rule>
+  </Style>
+
+  <Style name="places">
+    <Rule>
+      <MarkersSymbolizer fill="red" width="10" height="10" />
+    </Rule>
+  </Style>
+
+  <Layer name="places" srs="+init=epsg:4326">
+    <StyleName>places</StyleName>
+    <Datasource>
+      <Parameter name="type">postgis</Parameter>
+      <Parameter name="host">localhost</Parameter>
+      <Parameter name="dbname">gis</Parameter>
+      <Parameter name="user">cnc</Parameter>
+      <Parameter name="password">123</Parameter>
+      <Parameter name="table">planet_osm_polygon</Parameter>
+      <Parameter name="geometry_field">geom</Parameter>
+      <Parameter name="srid">4326</Parameter>
+    </Datasource>
+  </Layer>
+
+</Map>
